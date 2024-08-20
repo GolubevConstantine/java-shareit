@@ -14,36 +14,28 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse validateException(final MethodArgumentNotValidException e) {
+    public ErrorResponse handlerMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         log.info(e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
-/*
-
-    @ExceptionHandler
-    public ResponseEntity<String> validateException(final ConstraintViolationException e) {
-        log.info(e.getMessage());
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-*/
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse entityNotFoundException(final EntityNotFoundException e) {
+    public ErrorResponse handlerEntityNotFoundException(final EntityNotFoundException e) {
         log.info(e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse userNotUniqueEmailException(final NotUniqueEmailException e) {
+    public ErrorResponse handlerNotUniqueEmailException(final NotUniqueEmailException e) {
         log.info(e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse notOwnerException(final NotOwnerException e) {
+    public ErrorResponse handlerNotOwnerException(final NotOwnerException e) {
         log.info(e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
