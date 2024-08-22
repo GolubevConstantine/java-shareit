@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.utils.Create;
+import ru.practicum.shareit.utils.Update;
 
 import java.util.List;
 
@@ -30,22 +31,25 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public List<ItemDto> getFilmBySearch(@RequestParam String text) {
+    public List<ItemDto> getItemBySearch(@RequestParam String text) {
         log.info("GET / search / {}", text);
-        return itemService.getItemBySearch(text);
+        return itemService.getItemsBySearch(text);
     }
 
     @PostMapping
     public ItemDto saveNewItem(@Validated(Create.class) @RequestBody ItemDto itemDto,
                                @RequestHeader("X-Sharer-User-Id") long userId) {
         log.info("POST / items / {}", itemDto.getName());
-        return itemService.saveNewItem(itemDto, userId);
+        itemDto.setOwnerId(userId);
+        return itemService.saveNewItem(itemDto);
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@PathVariable long itemId, @RequestBody ItemDto itemDto,
+    public ItemDto updateItem(@Validated(Update.class) @PathVariable long itemId, @RequestBody ItemDto itemDto,
                               @RequestHeader("X-Sharer-User-Id") long userId) {
         log.info("PATCH / items / {}", itemId);
-        return itemService.updateItem(itemId, itemDto, userId);
+        itemDto.setOwnerId(userId);
+        itemDto.setId(itemId);
+        return itemService.updateItem(itemDto);
     }
 }

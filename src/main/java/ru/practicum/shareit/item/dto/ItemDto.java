@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.utils.Create;
 
 
@@ -17,4 +18,8 @@ public class ItemDto {
     private String description;
     @NotNull(groups = {Create.class})
     private Boolean available;
+    @NotNull
+    private long ownerId;
+    @NotNull
+    private User owner;
 }

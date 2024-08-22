@@ -34,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getItemBySearch(String text) {
+    public List<ItemDto> getItemsBySearch(String text) {
         if (text.isBlank()) {
             return Collections.emptyList();
         }
@@ -42,20 +42,20 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto saveNewItem(ItemDto itemDto, long userId) {
-        userService.getUserById(userId);
-        return ItemMapper.toItemDto(itemRepository.saveNewItem(ItemMapper.toItem(itemDto), userId));
-    }
+    public ItemDto saveNewItem(ItemDto itemDto) {
+            userService.getUserById(itemDto.getOwnerId());
+            return ItemMapper.toItemDto(itemRepository.saveNewItem(ItemMapper.toItem(itemDto), itemDto.getOwnerId()));
+        }
 
     @Override
-    public ItemDto updateItem(long itemId, ItemDto itemDto, long userId) {
-        userService.getUserById(userId);
-        Item item = itemRepository.getItemById(itemId).orElseThrow(() ->
+    public ItemDto updateItem(ItemDto itemDto) {
+        userService.getUserById(itemDto.getOwnerId());
+        Item item = itemRepository.getItemById(itemDto.getId()).orElseThrow(() ->
                 new EntityNotFoundException(String.format("Объект класса %s не найден", Item.class)));
         String name = itemDto.getName();
         String description = itemDto.getDescription();
         Boolean available = itemDto.getAvailable();
-        if (item.getOwnerId() == userId) {
+        if (item.getOwnerId() == itemDto.getOwnerId()) {
             if (name != null && !name.isBlank()) {
                 item.setName(name);
             }
@@ -67,7 +67,7 @@ public class ItemServiceImpl implements ItemService {
             }
         } else {
             throw new NotOwnerException(String.format("Пользователь с id %s не является собственником %s",
-                    userId, name));
+                    itemDto.getOwnerId(), name));
         }
         return ItemMapper.toItemDto(item);
     }
