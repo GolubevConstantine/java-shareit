@@ -37,3 +37,24 @@ CREATE TABLE IF NOT EXISTS comments
     created   TIMESTAMP DEFAULT now(),
     CONSTRAINT pk_comment PRIMARY KEY (id)
 );
+
+
+DELETE
+from bookings;
+DELETE
+from items;
+DELETE
+from users;
+
+
+ALTER TABLE bookings
+    ALTER COLUMN id
+        restart;
+
+ALTER TABLE users
+    ALTER COLUMN id
+        restart;
+
+ALTER TABLE items
+    ALTER COLUMN id
+        restart;
