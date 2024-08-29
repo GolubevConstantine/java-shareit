@@ -9,6 +9,7 @@ import ru.practicum.shareit.request.ItemRequest;
 @Entity
 @Table(name = "items")
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @ToString
