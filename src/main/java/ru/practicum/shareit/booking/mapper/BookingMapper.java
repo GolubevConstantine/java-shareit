@@ -1,15 +1,20 @@
-package ru.practicum.shareit.booking.dto;
+package ru.practicum.shareit.booking.mapper;
 
 import lombok.experimental.UtilityClass;
+import ru.practicum.shareit.booking.dto.BookingDtoRequest;
+import ru.practicum.shareit.booking.dto.BookingDtoResponse;
+import ru.practicum.shareit.booking.dto.BookingDtoShort;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingStatus;
-import ru.practicum.shareit.item.dto.ItemMapper;
-import ru.practicum.shareit.user.dto.UserMapper;
+import ru.practicum.shareit.item.Item;
+import ru.practicum.shareit.item.mapper.ItemMapper;
+import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.mapper.UserMapper;
 
 @UtilityClass
 public class BookingMapper {
-    public BookingDtoOut toBookingDtoOut(Booking booking) {
-        return new BookingDtoOut(
+    public BookingDtoResponse toBookingDtoResponse(Booking booking) {
+        return new BookingDtoResponse(
                 booking.getId(),
                 booking.getStart(),
                 booking.getEnd(),
@@ -29,9 +34,12 @@ public class BookingMapper {
         );
     }
 
-    public Booking toBooking(BookingDtoIn bookingDtoIn, Booking booking) {
-        booking.setStart(bookingDtoIn.getStart());
-        booking.setEnd(bookingDtoIn.getEnd());
+    public Booking toBooking(BookingDtoRequest bookingDtoRequest, Item item, User booker) {
+        Booking booking = new Booking();
+        booking.setItem(item);
+        booking.setBooker(booker);
+        booking.setStart(bookingDtoRequest.getStart());
+        booking.setEnd(bookingDtoRequest.getEnd());
         booking.setStatus(BookingStatus.WAITING);
         return booking;
     }

@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
-public class ItemDtoIn {
+public class ItemDtoRequest {
     @NotBlank(groups = {Create.class})
     @Size(max = 255, groups = {Create.class, Update.class})
     private String name;
@@ -20,5 +20,4 @@ public class ItemDtoIn {
     private String description;
     @NotNull(groups = {Create.class})
     private Boolean available;
-    private Long requestId;
 }

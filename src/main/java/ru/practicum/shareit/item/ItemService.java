@@ -1,22 +1,22 @@
 package ru.practicum.shareit.item;
 
-import ru.practicum.shareit.item.comment.dto.CommentDtoIn;
-import ru.practicum.shareit.item.comment.dto.CommentDtoOut;
-import ru.practicum.shareit.item.dto.ItemDtoIn;
-import ru.practicum.shareit.item.dto.ItemDtoOut;
+import ru.practicum.shareit.item.comment.dto.CommentDtoRequest;
+import ru.practicum.shareit.item.comment.dto.CommentDtoResponse;
+import ru.practicum.shareit.item.dto.ItemDtoRequest;
+import ru.practicum.shareit.item.dto.ItemDtoResponse;
 
 import java.util.List;
 
 public interface ItemService {
-    ItemDtoOut getItemById(long itemId, long userId);
+    ItemDtoResponse getItemById(long itemId, long userId);
 
-    List<ItemDtoOut> getItemsByOwner(long userId);
+    List<ItemDtoResponse> getItemsByOwner(long userId);
 
-    List<ItemDtoOut> getItemBySearch(String text);
+    List<ItemDtoResponse> getItemBySearch(String text);
 
-    ItemDtoOut saveNewItem(ItemDtoIn itemDtoIn, long userId);
+    ItemDtoResponse saveNewItem(ItemDtoRequest itemDtoRequest, long userId);
 
-    ItemDtoOut updateItem(long itemId, ItemDtoIn itemDtoIn, long userId);
+    ItemDtoResponse updateItem(long itemId, ItemDtoRequest itemDtoRequest, long userId);
 
-    CommentDtoOut saveNewComment(long itemId, CommentDtoIn commentDtoIn, long userId);
+    CommentDtoResponse saveNewComment(long itemId, CommentDtoRequest commentDtoRequest, long userId);
 }

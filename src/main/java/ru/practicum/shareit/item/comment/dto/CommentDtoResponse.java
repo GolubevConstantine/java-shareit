@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class CommentDtoOut {
+public class CommentDtoResponse {
     private long id;
     private String text;
     private String authorName;

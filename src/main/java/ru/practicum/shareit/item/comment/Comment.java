@@ -3,7 +3,7 @@ package ru.practicum.shareit.item.comment;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.practicum.shareit.item.Item;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 

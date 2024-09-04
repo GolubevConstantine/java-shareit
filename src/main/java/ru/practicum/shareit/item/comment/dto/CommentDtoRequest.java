@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Data
-public class CommentDtoIn {
+public class CommentDtoRequest {
     @Size(max = 1000, groups = {Create.class, Update.class})
     @NotBlank(groups = {Create.class})
     private String text;

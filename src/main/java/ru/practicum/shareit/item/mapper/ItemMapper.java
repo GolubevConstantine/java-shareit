@@ -1,23 +1,22 @@
-package ru.practicum.shareit.item.dto;
+package ru.practicum.shareit.item.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.item.Item;
-import ru.practicum.shareit.user.dto.UserMapper;
+import ru.practicum.shareit.item.dto.ItemDtoRequest;
+import ru.practicum.shareit.item.dto.ItemDtoResponse;
+import ru.practicum.shareit.item.dto.ItemDtoShort;
+import ru.practicum.shareit.user.mapper.UserMapper;
 
 @UtilityClass
 public class ItemMapper {
-    public ItemDtoOut toItemDtoOut(Item item) {
-        ItemDtoOut itemDtoOut = new ItemDtoOut(
+    public ItemDtoResponse toItemDtoResponse(Item item) {
+        return new ItemDtoResponse(
                 item.getId(),
                 item.getName(),
                 item.getDescription(),
                 item.getAvailable(),
                 UserMapper.toUserDtoShort(item.getOwner())
         );
-        if (item.getRequest() != null) {
-            itemDtoOut.setRequestId(item.getRequest().getId());
-        }
-        return itemDtoOut;
     }
 
     public ItemDtoShort toItemDtoShort(Item item) {
@@ -27,11 +26,11 @@ public class ItemMapper {
         );
     }
 
-    public Item toItem(ItemDtoIn itemDtoIn) {
+    public Item toItem(ItemDtoRequest itemDtoRequest) {
         return new Item(
-                itemDtoIn.getName(),
-                itemDtoIn.getDescription(),
-                itemDtoIn.getAvailable()
+                itemDtoRequest.getName(),
+                itemDtoRequest.getDescription(),
+                itemDtoRequest.getAvailable()
         );
     }
 }
