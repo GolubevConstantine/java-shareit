@@ -18,9 +18,8 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(nullable = false)
     private String text;
 
     @ManyToOne
@@ -31,14 +30,5 @@ public class Comment {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @Column(nullable = false)
     private LocalDateTime created;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

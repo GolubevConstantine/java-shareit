@@ -19,6 +19,8 @@ import ru.practicum.shareit.item.comment.mapper.CommentMapper;
 import ru.practicum.shareit.item.dto.ItemDtoRequest;
 import ru.practicum.shareit.item.dto.ItemDtoResponse;
 import ru.practicum.shareit.item.mapper.ItemMapper;
+import ru.practicum.shareit.request.ItemRequest;
+import ru.practicum.shareit.request.ItemRequestRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.UserRepository;
 
@@ -44,6 +46,7 @@ public class ItemServiceImpl implements ItemService {
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
+    private final ItemRequestRepository requestRepository;
 
     @Override
     public ItemDtoResponse saveNewItem(ItemDtoRequest itemDtoRequest, long userId) {
@@ -51,6 +54,11 @@ public class ItemServiceImpl implements ItemService {
         User owner = getUser(userId);
         Item item = ItemMapper.toItem(itemDtoRequest);
         item.setOwner(owner);
+        Long requestId = itemDtoRequest.getRequestId();
+        if (requestId != null) {
+            item.setRequest(requestRepository.findById(requestId).orElseThrow(() ->
+                    new EntityNotFoundException(String.format("Объект класса %s не найден", ItemRequest.class))));
+        }
         return ItemMapper.toItemDtoResponse(itemRepository.save(item));
     }
 
